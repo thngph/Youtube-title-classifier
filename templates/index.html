@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>WhatthatYoutube</title>
+  <link rel="icon" href="{{ url_for('static',filename='icon.png') }}">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Favicon-->
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <!-- Core theme CSS (includes Bootstrap)-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles.css') }}">
+</head>
+
+<body>
+    <img src="https://lh3.googleusercontent.com/L4haMN-TsQNGw4OkWKqEbmOU5e6giwJ0_wLgv_8QE05kOladEeYRHBOM2TpCilDdpcsprB8Y8E2Z7_LZQq0eOmf-vy4SAV9cRJxP96IQumGOKT4hIatk=s3000-rw"
+    alt="" class="bg-image">
+  <!-- Responsive navbar-->
+  <nav class="navbar navbar-expand-lg navbar-dark justify-content-around">
+    <a class="navbar-brand" href="#"><i class="fa-brands fa-youtube fs-2 yt-icon"></i> CLASSIFIER</a>
+    <ul class="navbar-nav flex-row justify-content-between">
+      <li class="nav-item">
+        <a class="nav-link" href="https://github.com/thngph"><i class="fa-brands fa-github"></i></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="!#"><i class="fa-brands fa-google-drive"></i></a>
+
+      </li>
+    </ul>
+    
+
+  </nav>
+  <!-- Page content-->
+  <div class="landing-top">
+    <div class="cover">
+
+        <div class="card my-5">
+            <div class="card-body px-3">
+              <p class="fs-2 card-title text-white"><span class="fw-bolder"><span><i class="fa-brands fa-youtube fs-1 yt-icon yt-title"></i></span> Classify em titles</span></p>
+              <p class="card-text text-white">Nhập vào tiêu đề hoặc video URL/ID, chúng tôi sẽ giúp bạn phân loại!</p>
+              <p class="lead text-white-50 fs-6">URL có dạng youtube.com/watch?v=aircAruvnKk, youtu.be/aircAruvnKk, youtube.com/embed/aircAruvnKk,...
+                <br>
+                hoặc ID có dạng aircAruvnKk
+              </p>
+            </div>
+          </div>
+
+
+      <div class="text-start">
+        <!-- <p class="fs-1"><span class="fw-bolder">What that <span><i class="fa-brands fa-youtube fs-1 yt-icon yt-title"></i></span>?</span></p>
+        <p class="text-white fs-4">Nhập vào tiêu đề video, hoặc video URL, video ID chúng tôi sẽ giúp bạn phân loại!</p>
+        <p class="lead text-black-50 fs-6">URL có dạng như https://youtube.com/watch?v=aircAruvnKk, youtu.be/aircAruvnKk, youtube.com/embed/aircAruvnKk,...</p> -->
+
+
+        <form id="form" name="Form" action="{{ url_for('title') }}" method="POST">
+            <div class="my-3 d-flex">
+              <input type="text" class="form-control" id="title" name="title" placeholder="Tiêu đề" required/>
+              <button type="submit" class="btn text-right mx-3">Submit</button>
+              <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+            </div>            
+
+          </form>
+
+          <form id="formurl" name="formurl" action="/url" method="POST" onsubmit="return DoSubmit()">
+            <div class="my-3 d-flex">
+              <input type="text" class="form-control" id="url" name="url" placeholder="URL" required/>
+              <button type="submit" class="btn text-right mx-3">Submit</button>
+            </div>            
+            
+            <div id="" class="form-text w-100 text-danger text-center fw-bold">{{error}}</div>
+          </form>
+
+        
+          <script>
+            var myform = document.getElementById('formurl');
+                myform.onsubmit = function(){
+                    var url = document.getElementById('url').value;
+                    if (url.length == 11) {
+                        return true;
+                    }
+                    if (url.length > 11){
+                        if (url.includes('youtube.com/watch?v=')|| url.includes('youtu.be/') || url.includes('youtube.com/embed/')){
+                            document.getElementById('url').value = url.slice(-11);
+                            return true;
+                        }
+                        else{
+                            return false;
+                        }
+
+                    }
+                    return false;
+                    
+                };
+        </script>
+
+        <p class="arrow floating">↓ scroll</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="info p-0">
+
+
+    <!-- <div class="row">        
+      <h2 class="lh-1 my-4 text-center"></i>
+      Thông tin về nhóm</h2>
+  </div>
+  <div class="row d-flex justify-content-center align-items-center">
+      <p class="about-text text-center">Đây là đồ án của nhóm 3, môn Học máy thống kê (DS102-M21).</p>
+      <p class="about-text text-center">Trang web này sử dụng dữ liệu là tiêu đề của các video của Youtube, từ đó xây dựng nên mô hình máy học, có thể phân loại tiêu đề của một video.</p>
+</div> -->
+  <div class="info-group pt-5">
+
+    <div class="card-body px-5 py-4 d-flex flex-column justify-content-center text-left text-md-center">
+      <p class="fs-2 card-title"><span class="fw-bolder">Thông tin về nhóm</p>
+      <p class="card-text">Đây là đồ án của nhóm 3, môn học Học máy thống kê (DS102-M21).
+        <br>
+        Trang web này sử dụng dữ liệu là tiêu đề của các video của Youtube, 
+        từ đó xây dựng nên mô hình máy học, có thể phân loại tiêu đề của video.</p>
+    </div>
+
+    <div class="text-center footer-text py-3">
+      © 2022 Copyright:
+      <a class="" href="https://github.com/thngph/WhatTheYoutube" target="_blank">nhom03</a>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+  <!-- Bootstrap core JS-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Core theme JS-->
+  <!-- <script src="js/scripts.js"></script> -->
+</body>
+
+</html>
