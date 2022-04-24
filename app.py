@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, jsonify, redirect, render_template, request, url_for
 from pytube import YouTube as Youtube
 import random
 
@@ -34,10 +34,11 @@ def error():
 
 @app.route('/api', methods=['POST'])
 def api():
-    data = request.get_json(force=True)
+    data = request.get_json(force=True).values()
+    #binary model does something here
     types = ["giải trí", "gaming", "giáo dục", "ẩm thực"]
-    output = {"type": types[random.randint(0, 3)]}
-    return output
+    output = {"title":list(data)[0] ,"type": types[random.randint(0, 3)]}
+    return jsonify(output)
 
  
 if __name__ == '__main__': app.run(debug=True)

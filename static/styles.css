@@ -150,3 +150,7 @@
 .footer-text{
     background-color: #000;
 }
+.as-code{
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0 auto;
+}

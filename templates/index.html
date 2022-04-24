@@ -28,7 +28,7 @@
     alt="" class="bg-image">
   <!-- Responsive navbar-->
   <nav class="navbar navbar-expand-lg navbar-dark justify-content-around">
-    <a class="navbar-brand" href="#"><i class="fa-brands fa-youtube fs-2 yt-icon"></i> CLASSIFIER</a>
+    <a class="navbar-brand" href="/"><i class="fa-brands fa-youtube fs-2 yt-icon"></i> CLASSIFIER</a>
     <ul class="navbar-nav flex-row justify-content-between">
       <li class="nav-item">
         <a class="nav-link" href="https://github.com/thngph"><i class="fa-brands fa-github"></i></a>
@@ -128,7 +128,16 @@
       <p class="card-text">Đây là đồ án của nhóm 3, môn học Học máy thống kê (DS102-M21).
         <br>
         Trang web này sử dụng dữ liệu là tiêu đề của các video của Youtube, 
-        từ đó xây dựng nên mô hình máy học, có thể phân loại tiêu đề của video.</p>
+        từ đó xây dựng nên mô hình máy học, có thể phân loại tiêu đề của video.
+      <br>
+      Ngoài ra, bạn có thể gửi request chứa tiêu đề video tới API của chúng tôi tại /api như bên dưới để phân loại video.
+      <p class="as-code text-start">
+        import requests, json <br>
+        r = requests.post(
+    'https://whattheyoutube.herokuapp.com/api',<br> <span class="px-3"></span>
+    data = json.dumps({'title': "sleep n chill"}))
+      </p>
+      </p>
     </div>
 
     <div class="text-center footer-text py-3">
