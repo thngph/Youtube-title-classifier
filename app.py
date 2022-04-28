@@ -1,8 +1,13 @@
 from flask import Flask, jsonify, redirect, render_template, request, url_for
 from pytube import YouTube as Youtube
 import random
+import pickle as p
+from . import predict
 
 app = Flask(__name__)
+
+model = p.load(open('mlmodels/svm_model_pkl', 'rb'))
+transformer = p.load(open('mlmodels/svm_tfidf_pkl', 'rb'))
 
 
 @app.route('/')
@@ -14,7 +19,8 @@ def index():
 def title():
     title = request.form['title']
     if title:
-        return render_template('output.html', title=title)
+        output = predict.final_predict(title, transformer, model)
+        return render_template('output.html', output=output)
     return redirect(url_for('error'))
 
 @app.route('/url', methods=['POST'])
@@ -24,7 +30,8 @@ def url():
         try:
             yt = Youtube('https://youtube.com/watch?v=' + url)
             title = yt.title
-            return render_template('output.html', title=title)
+            output = predict.final_predict(title, transformer, model)
+            return render_template('output.html', output=output)
         except:
             return redirect(url_for('error'))
 
@@ -35,9 +42,7 @@ def error():
 @app.route('/api', methods=['POST'])
 def api():
     data = request.get_json(force=True).values()
-    #binary model does something here
-    types = ["giải trí", "gaming", "giáo dục", "ẩm thực"]
-    output = {"title":list(data)[0] ,"type": types[random.randint(0, 3)]}
+    output = predict.final_predict(data, transformer, model)
     return jsonify(output)
 
  
