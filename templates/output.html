@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta name="description" content="" />
   <meta name="author" content="" />
-  <title>WhatthatYoutube</title>
+  <title>YoutubeClassifier</title>
   <link rel="icon" href="{{ url_for('static',filename='icon.png') }}">
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -95,11 +95,11 @@
         Trang web này sử dụng dữ liệu là tiêu đề của các video của Youtube, 
         từ đó xây dựng nên mô hình máy học, có thể phân loại tiêu đề của video.
         <br>
-        Ngoài ra, chúng tôi hỗ trợ bạn API tại <i>https://../api/</i>. 
+        Ngoài ra, chúng tôi hỗ trợ API tại <i>https://youtubeclassifier.herokuapp.com/api</i>. 
       <p class="as-code p-1 rounded border text-start shadow">
         import requests, json <br>
         r = requests.post(
-    'https://whattheyoutube.herokuapp.com/api',<br> <span class="px-3"></span>
+    'https://youtubeclassifier.herokuapp.com/api',<br> <span class="px-3"></span>
     data = json.dumps({'title': "forget about the deadlines"}))
       </p>
       </p>
