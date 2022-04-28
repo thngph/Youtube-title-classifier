@@ -1,6 +1,5 @@
 import pandas as pd
 import re
-import advertools as adv
 from underthesea import word_tokenize
 from pyvi import ViTokenizer
 
@@ -11,10 +10,8 @@ def preprocess_data(data, transformer):
     data = data.replace("tiếng anh","tiếng_anh")
     data = re.sub(r'[^\w\s]', '', data)
     data = word_tokenize(data)
-    data = data.replace(" ","_")
-    stop_words = adv.stopwords['vietnamese']
-    z = lambda x: " ".join([w for w in x if w not in stop_words])
-    data = z(data)
+    y = lambda x: [w.replace(" ","_") for w in x]
+    data = y(data)
     d = {'title': [" ".join(data)]}
     data = pd.DataFrame(data = d)
     return transformer.transform(data.title).toarray()
