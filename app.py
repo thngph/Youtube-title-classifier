@@ -2,11 +2,43 @@ import os
 from flask import Flask, jsonify, redirect, render_template, request, url_for
 from pytube import YouTube as Youtube
 import pickle as p
-from . import predict
 
 port = int(os.environ.get('PORT', 5000))
 
 app = Flask(__name__)
+
+import pandas as pd
+import re
+from underthesea import word_tokenize
+from pyvi import ViTokenizer
+
+
+def preprocess_data(data, transformer):
+    data = re.sub(r'\d+', '', str(data).lower())
+    data = ViTokenizer.tokenize(data)
+    data = data.replace("tiếng anh","tiếng_anh")
+    data = re.sub(r'[^\w\s]', '', data)
+    data = word_tokenize(data)
+    y = lambda x: [w.replace(" ","_") for w in x]
+    data = y(data)
+    d = {'title': [" ".join(data)]}
+    data = pd.DataFrame(data = d)
+    return transformer.transform(data.title).toarray()
+
+
+def make_predict(data, model):
+    return model.predict(data)
+
+def map_predict(result):
+    classes = ['du lịch', 'giáo dục', 'khoa học và công nghệ', 'làm đẹp',
+       'lịch sử', 'phim ảnh', 'thời trang', 'tin tức', 'trò chơi',
+       'trẻ em', 'y tế', 'âm nhạc', 'ẩm thực']
+    return classes[result[0]]
+
+def final_predict(data, transformer, model):
+    data = preprocess_data(data, transformer)
+    result = make_predict(data, model)
+    return map_predict(result)
 
 model = p.load(open('mlmodels/svm_model_pkl', 'rb'))
 transformer = p.load(open('mlmodels/svm_tfidf_pkl', 'rb'))
@@ -21,7 +53,7 @@ def index():
 def title():
     title = request.form['title']
     if title:
-        output = predict.final_predict(title, transformer, model)
+        output = final_predict(title, transformer, model)
         return render_template('output.html', output=output)
     return redirect(url_for('error'))
 
@@ -32,7 +64,7 @@ def url():
         try:
             yt = Youtube('https://youtube.com/watch?v=' + url)
             title = yt.title
-            output = predict.final_predict(title, transformer, model)
+            output = final_predict(title, transformer, model)
             return render_template('output.html', output=output)
         except:
             return redirect(url_for('error'))
@@ -44,7 +76,7 @@ def error():
 @app.route('/api', methods=['POST'])
 def api():
     data = request.get_json(force=True).values()
-    output = predict.final_predict(data, transformer, model)
+    output = final_predict(data, transformer, model)
     return jsonify(output)
 
  
