@@ -1,7 +1,10 @@
+import os
 from flask import Flask, jsonify, redirect, render_template, request, url_for
 from pytube import YouTube as Youtube
 import pickle as p
 from . import predict
+
+port = int(os.environ.get('PORT', 5000))
 
 app = Flask(__name__)
 
@@ -45,4 +48,4 @@ def api():
     return jsonify(output)
 
  
-if __name__ == '__main__': app.run(debug=True, host='0.0.0.0')
+if __name__ == '__main__': app.run(debug=True, host='0.0.0.0', port=port)
