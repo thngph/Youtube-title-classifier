@@ -1,13 +1,8 @@
 import pandas as pd
 import re
-
+import advertools as adv
 from underthesea import word_tokenize
 from pyvi import ViTokenizer
-
-from sklearn.model_selection import train_test_split
-from sklearn import linear_model
-from sklearn.feature_extraction.text import TfidfVectorizer
-import advertools as adv
 
 
 def preprocess_data(data, transformer):
@@ -16,8 +11,10 @@ def preprocess_data(data, transformer):
     data = data.replace("tiếng anh","tiếng_anh")
     data = re.sub(r'[^\w\s]', '', data)
     data = word_tokenize(data)
-    y = lambda x: [w.replace(" ","_") for w in x]
-    data = y(data)
+    data = data.replace(" ","_")
+    stop_words = adv.stopwords['vietnamese']
+    z = lambda x: " ".join([w for w in x if w not in stop_words])
+    data = z(data)
     d = {'title': [" ".join(data)]}
     data = pd.DataFrame(data = d)
     return transformer.transform(data.title).toarray()

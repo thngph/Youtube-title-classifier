@@ -1,6 +1,5 @@
 from flask import Flask, jsonify, redirect, render_template, request, url_for
 from pytube import YouTube as Youtube
-import random
 import pickle as p
 from . import predict
 
