@@ -9,13 +9,17 @@ app = Flask(__name__)
 
 
 
-def make_predict(data, model):
-    return model.predict_proba(data)
+
 
 classes = ['giáo dục và khoa học công nghệ', 'giải trí và nghệ thuật',
        'tin tức', 'đời sống']
 model = p.load(open('mlmodels/Thinh_svm_sgdc_tfidf_pkl', 'rb'))
 
+
+def make_predict(data, model):
+    pred = model.predict_proba(data)[0]
+    res = {classes[i]: pred[i] for i in range(len(classes))}
+    return dict(sorted(res.items(), key=lambda x: x[1], reverse=True))
 
 @app.route('/')
 def index():
@@ -26,8 +30,7 @@ def index():
 def title():
     title = request.form['title']
     if title:
-        pred = make_predict([title], model)[0]
-        res = {classes[i]: f"{pred[i]:.1%}" for i in range(len(classes))}
+        res = make_predict([title], model)
         return render_template('output.html', output=[title,res])
     return redirect(url_for('error'))
 
@@ -38,8 +41,7 @@ def url():
         try:
             yt = Youtube('https://youtube.com/watch?v=' + url)
             title = yt.title
-            pred = make_predict([title], model)[0]
-            res = {classes[i]: f"{pred[i]:.1%}" for i in range(len(classes))}
+            res = make_predict([title], model)
             return render_template('output.html', output=[title,res])
         except:
             return redirect(url_for('error'))
@@ -50,7 +52,7 @@ def error():
 
 @app.route('/api', methods=['POST'])
 def api():
-    data = [request.get_json(force=True).values()]
+    data = [request.get_json(force=True)[0]]
     output = make_predict(data, model)
     return jsonify(output)
 

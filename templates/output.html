@@ -49,12 +49,16 @@
     <div class="cover">
 
       <div class="card mt-5">
-        <div class="card-body">
-          <p class="fs-2 card-title text-white px-1"><span class="fw-bolder">
-              <span><i class="fa-brands fa-youtube fs-1 yt-icon yt-title"></i></span> Classified ✓</span></p>
-          <p class="fs-2 text-white"> {{output[0]}}</p>
+        <p class="fs-2 card-title text-white px-1"><span class="fw-bolder">
+          <span><i class="fa-brands fa-youtube fs-1 yt-icon yt-title"></i></span> Classified ✓</span>
+      </p>
+        <div class="card-body py-1">
+          
+          <p class="fs-4 text-white fw-bold">Tiêu đề:</p>
+          <p class="fs-5 text-white px-3">{{output[0]}}</p>
+          <p class="fs-4 text-white fw-bold">Dự đoán các lớp:</p>
           {% for key, value in output[1].items() %}
-          <p class="lead text-white fs-3 px-2">{{key}}: {{value}}</p>
+          <p class="lead text-white fs-5 px-3">{{key}}: {{ "{:.2%}".format(value) }}</p>
           {% endfor %}
         </div>
       </div>
@@ -89,31 +93,34 @@
       <p class="about-text text-center">Đây là đồ án của nhóm 3, môn Học máy thống kê (DS102-M21).</p>
       <p class="about-text text-center">Trang web này sử dụng dữ liệu là tiêu đề của các video của Youtube, từ đó xây dựng nên mô hình máy học, có thể phân loại tiêu đề của một video.</p>
 </div> -->
-    <div class="info-group pt-5">
+<div class="info-group pt-5">
 
-      <div class="card-body px-5 py-4 d-flex flex-column justify-content-center text-left text-md-center">
-        <p class="fs-2 card-title"><span class="fw-bolder">Thông tin về nhóm</p>
-        <p class="card-text">Đây là đồ án của nhóm 3, môn học Học máy thống kê (DS102-M21).
-          <br>
-          Trang web này sử dụng dữ liệu là tiêu đề của các video của Youtube,
-          từ đó xây dựng nên mô hình máy học, có thể phân loại tiêu đề của video.
-          <br>
-          Ngoài ra, chúng tôi hỗ trợ API tại <i>https://youtubeclassifier.herokuapp.com/api</i>.
-        <p class="as-code p-1 rounded border text-start shadow">
-          import requests, json <br>
-          r = requests.post(
-          'https://youtubeclassifier.herokuapp.com/api',<br> <span class="px-3"></span>
-          data = json.dumps({'title': "forget about the deadlines"}))
-        </p>
-        </p>
-      </div>
+  <div class="card-body px-5 py-4 d-flex flex-column justify-content-center text-left text-md-center">
+    <p class="fs-2 card-title"><span class="fw-bolder">Thông tin về nhóm</p>
+    <p class="card-text">Đây là đồ án của nhóm 3, môn học Học máy thống kê (DS102-M21).
+      <br>
+      Trang web này sử dụng dữ liệu là tiêu đề của các video của Youtube, 
+      từ đó xây dựng nên mô hình máy học có thể phân loại tiêu đề của video.
+    <br>
+    YoutubeClassifier còn hỗ trợ API tại <i>https://youtubeclassifier.herokuapp.com/api</i>. 
+    <p class="as-code p-1 rounded border text-start shadow">
+      import requests, json <br>
+      r = requests.post(<br> <span class="px-3"></span>
+  'https://youtubeclassifier.herokuapp.com/api',<br> <span class="px-3"></span>
+  data = json.dumps(['bao tiền một mớ bình yên? - 14 Casper & Bon (Official)'],<br> <span class="px-3"></span>
+  ensure_ascii=False).encode('utf-8'))<br>
+  print(r.json())
+    </p>
+    </p>
+  </div>
 
-      <div class="text-center footer-text py-3">
-        © 2022 Copyright:
-        <a class="" href="!#" target="_blank">nhom03</a>
-      </div>
+  <div class="text-center footer-text py-3">
+    © 2022 Copyright:
+    <a class="" href="!#" target="_blank">nhom03</a>
+  </div>
 
-    </div>
+</div>
+
 
 
 
