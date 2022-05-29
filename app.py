@@ -7,41 +7,14 @@ port = int(os.environ.get('PORT', 5000))
 
 app = Flask(__name__)
 
-import pandas as pd
-import re
-from underthesea import word_tokenize
-from pyvi import ViTokenizer
-
-
-def preprocess_data(data, transformer):
-    data = re.sub(r'\d+', '', str(data).lower())
-    data = ViTokenizer.tokenize(data)
-    data = data.replace("tiếng anh","tiếng_anh")
-    data = re.sub(r'[^\w\s]', '', data)
-    data = word_tokenize(data)
-    y = lambda x: [w.replace(" ","_") for w in x]
-    data = y(data)
-    d = {'title': [" ".join(data)]}
-    data = pd.DataFrame(data = d)
-    return transformer.transform(data.title).toarray()
 
 
 def make_predict(data, model):
-    return model.predict(data)
+    return model.predict_proba(data)
 
-def map_predict(result):
-    classes = ['du lịch', 'giáo dục', 'khoa học và công nghệ', 'làm đẹp',
-       'lịch sử', 'phim ảnh', 'thời trang', 'tin tức', 'trò chơi',
-       'trẻ em', 'y tế', 'âm nhạc', 'ẩm thực']
-    return classes[result[0]]
-
-def final_predict(data, transformer, model):
-    data = preprocess_data(data, transformer)
-    result = make_predict(data, model)
-    return map_predict(result)
-
-model = p.load(open('mlmodels/svm_model_pkl', 'rb'))
-transformer = p.load(open('mlmodels/svm_tfidf_pkl', 'rb'))
+classes = ['giáo dục và khoa học công nghệ', 'giải trí và nghệ thuật',
+       'tin tức', 'đời sống']
+model = p.load(open('mlmodels/Thinh_svm_sgdc_tfidf_pkl', 'rb'))
 
 
 @app.route('/')
@@ -53,8 +26,9 @@ def index():
 def title():
     title = request.form['title']
     if title:
-        output = final_predict(title, transformer, model)
-        return render_template('output.html', output=output)
+        pred = make_predict([title], model)[0]
+        res = {classes[i]: f"{pred[i]:.1%}" for i in range(len(classes))}
+        return render_template('output.html', output=[title,res])
     return redirect(url_for('error'))
 
 @app.route('/url', methods=['POST'])
@@ -64,8 +38,9 @@ def url():
         try:
             yt = Youtube('https://youtube.com/watch?v=' + url)
             title = yt.title
-            output = final_predict(title, transformer, model)
-            return render_template('output.html', output=output)
+            pred = make_predict([title], model)[0]
+            res = {classes[i]: f"{pred[i]:.1%}" for i in range(len(classes))}
+            return render_template('output.html', output=[title,res])
         except:
             return redirect(url_for('error'))
 
@@ -75,8 +50,8 @@ def error():
 
 @app.route('/api', methods=['POST'])
 def api():
-    data = request.get_json(force=True).values()
-    output = final_predict(data, transformer, model)
+    data = [request.get_json(force=True).values()]
+    output = make_predict(data, model)
     return jsonify(output)
 
  

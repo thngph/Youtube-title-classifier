@@ -11,7 +11,8 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
     integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -20,11 +21,12 @@
   <!-- Core theme CSS (includes Bootstrap)-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url_for('static',filename='styles.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static',filename='styles.css') }}">
 </head>
 
 <body>
-    <img src="https://lh3.googleusercontent.com/L4haMN-TsQNGw4OkWKqEbmOU5e6giwJ0_wLgv_8QE05kOladEeYRHBOM2TpCilDdpcsprB8Y8E2Z7_LZQq0eOmf-vy4SAV9cRJxP96IQumGOKT4hIatk=s3000-rw"
+  <img
+    src="https://lh3.googleusercontent.com/L4haMN-TsQNGw4OkWKqEbmOU5e6giwJ0_wLgv_8QE05kOladEeYRHBOM2TpCilDdpcsprB8Y8E2Z7_LZQq0eOmf-vy4SAV9cRJxP96IQumGOKT4hIatk=s3000-rw"
     alt="" class="bg-image">
   <!-- Responsive navbar-->
   <nav class="navbar navbar-expand-lg navbar-dark justify-content-around">
@@ -39,27 +41,28 @@
 
       </li>
     </ul>
-    
+
 
   </nav>
   <!-- Page content-->
   <div class="landing-top">
     <div class="cover">
 
-        <div class="card mt-5">
-            <div class="card-body">
-              <p class="fs-2 card-title text-white"><span class="fw-bolder">
-                  <span><i class="fa-brands fa-youtube fs-1 yt-icon yt-title"></i></span> Classified ✓</span></p>
-              <p class="card-text text-white pt-4 pb-3 d-flex justify-content-center">Video của bạn thuộc vào nhóm 
-                <p class="lead text-white text-center display-5">{{output}}</p> </p>
-              
-            </div>
-          </div>
-          <div class="d-flex flex-row-reverse">
-            <a href="/" class="text-end mt-2 my-1 text-decoration-none fw-bold text-white">&rarrhk; 
-              Tiếp tục với tiêu đề khác</a>
-          </div>
-          
+      <div class="card mt-5">
+        <div class="card-body">
+          <p class="fs-2 card-title text-white px-1"><span class="fw-bolder">
+              <span><i class="fa-brands fa-youtube fs-1 yt-icon yt-title"></i></span> Classified ✓</span></p>
+          <p class="fs-2 text-white"> {{output[0]}}</p>
+          {% for key, value in output[1].items() %}
+          <p class="lead text-white fs-3 px-2">{{key}}: {{value}}</p>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="d-flex flex-row-reverse">
+        <a href="/" class="text-end mt-2 my-1 text-decoration-none fw-bold text-white">&rarrhk;
+          Tiếp tục với tiêu đề khác</a>
+      </div>
+
 
 
       <div class="text-start">
@@ -68,7 +71,7 @@
         <p class="lead text-black-50 fs-6">URL có dạng như https://youtube.com/watch?v=aircAruvnKk, youtu.be/aircAruvnKk, youtube.com/embed/aircAruvnKk,...</p> -->
 
 
-       
+
 
         <p class="arrow floating">↓ scroll</p>
       </div>
@@ -86,31 +89,31 @@
       <p class="about-text text-center">Đây là đồ án của nhóm 3, môn Học máy thống kê (DS102-M21).</p>
       <p class="about-text text-center">Trang web này sử dụng dữ liệu là tiêu đề của các video của Youtube, từ đó xây dựng nên mô hình máy học, có thể phân loại tiêu đề của một video.</p>
 </div> -->
-  <div class="info-group pt-5">
+    <div class="info-group pt-5">
 
-    <div class="card-body px-5 py-4 d-flex flex-column justify-content-center text-left text-md-center">
-      <p class="fs-2 card-title"><span class="fw-bolder">Thông tin về nhóm</p>
-      <p class="card-text">Đây là đồ án của nhóm 3, môn học Học máy thống kê (DS102-M21).
-        <br>
-        Trang web này sử dụng dữ liệu là tiêu đề của các video của Youtube, 
-        từ đó xây dựng nên mô hình máy học, có thể phân loại tiêu đề của video.
-        <br>
-        Ngoài ra, chúng tôi hỗ trợ API tại <i>https://youtubeclassifier.herokuapp.com/api</i>. 
-      <p class="as-code p-1 rounded border text-start shadow">
-        import requests, json <br>
-        r = requests.post(
-    'https://youtubeclassifier.herokuapp.com/api',<br> <span class="px-3"></span>
-    data = json.dumps({'title': "forget about the deadlines"}))
-      </p>
-      </p>
+      <div class="card-body px-5 py-4 d-flex flex-column justify-content-center text-left text-md-center">
+        <p class="fs-2 card-title"><span class="fw-bolder">Thông tin về nhóm</p>
+        <p class="card-text">Đây là đồ án của nhóm 3, môn học Học máy thống kê (DS102-M21).
+          <br>
+          Trang web này sử dụng dữ liệu là tiêu đề của các video của Youtube,
+          từ đó xây dựng nên mô hình máy học, có thể phân loại tiêu đề của video.
+          <br>
+          Ngoài ra, chúng tôi hỗ trợ API tại <i>https://youtubeclassifier.herokuapp.com/api</i>.
+        <p class="as-code p-1 rounded border text-start shadow">
+          import requests, json <br>
+          r = requests.post(
+          'https://youtubeclassifier.herokuapp.com/api',<br> <span class="px-3"></span>
+          data = json.dumps({'title': "forget about the deadlines"}))
+        </p>
+        </p>
+      </div>
+
+      <div class="text-center footer-text py-3">
+        © 2022 Copyright:
+        <a class="" href="!#" target="_blank">nhom03</a>
+      </div>
+
     </div>
-
-    <div class="text-center footer-text py-3">
-      © 2022 Copyright:
-      <a class="" href="!#" target="_blank">nhom03</a>
-    </div>
-
-  </div>
 
 
 
