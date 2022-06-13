@@ -7,10 +7,6 @@ port = int(os.environ.get('PORT', 5000))
 
 app = Flask(__name__)
 
-
-
-
-
 classes = ['giáo dục và khoa học công nghệ', 'giải trí và nghệ thuật',
        'tin tức', 'đời sống']
 model = p.load(open('mlmodels/Thinh_svm_sgdc_tfidf_pkl', 'rb'))
